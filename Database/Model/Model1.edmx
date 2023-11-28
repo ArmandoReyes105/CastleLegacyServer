@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CastleLegacyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id_Account" />
+          </Key>
+          <Property Name="Id_Account" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="320" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AccountCards">
+          <Key>
+            <PropertyRef Name="Id_AccountCards" />
+          </Key>
+          <Property Name="Id_AccountCards" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Account" Type="int" />
+          <Property Name="Id_Card" Type="int" />
+        </EntityType>
+        <EntityType Name="AccountCastles">
+          <Key>
+            <PropertyRef Name="Id_AccountCastles" />
+          </Key>
+          <Property Name="Id_AccountCastles" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Account" Type="int" />
+          <Property Name="Id_Castle" Type="int" />
+        </EntityType>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="Id_Card" />
+          </Key>
+          <Property Name="Id_Card" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Health" Type="int" />
+          <Property Name="Attack" Type="int" />
+        </EntityType>
+        <EntityType Name="Castle">
+          <Key>
+            <PropertyRef Name="Id_Castle" />
+          </Key>
+          <Property Name="Id_Castle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Friend">
+          <Key>
+            <PropertyRef Name="Id_Friend" />
+          </Key>
+          <Property Name="Id_Friend" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Account" Type="int" />
+          <Property Name="Id_AccountFriend" Type="int" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id_Profile" />
+          </Key>
+          <Property Name="Id_Profile" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProfileImage" Type="int" />
+          <Property Name="Victories" Type="int" />
+          <Property Name="Losses" Type="int" />
+          <Property Name="Id_Account" Type="int" />
+        </EntityType>
+        <Association Name="FK__AccountCa__Id_Ac__4F7CD00D">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountCastles" Type="Self.AccountCastles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="AccountCastles">
+              <PropertyRef Name="Id_Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountCa__Id_Ac__5535A963">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountCards" Type="Self.AccountCards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="AccountCards">
+              <PropertyRef Name="Id_Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountCa__Id_Ca__5070F446">
+          <End Role="Castle" Type="Self.Castle" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountCastles" Type="Self.AccountCastles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Castle">
+              <PropertyRef Name="Id_Castle" />
+            </Principal>
+            <Dependent Role="AccountCastles">
+              <PropertyRef Name="Id_Castle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountCa__Id_Ca__5629CD9C">
+          <End Role="Card" Type="Self.Card" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountCards" Type="Self.AccountCards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card">
+              <PropertyRef Name="Id_Card" />
+            </Principal>
+            <Dependent Role="AccountCards">
+              <PropertyRef Name="Id_Card" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend__Id_Accou__49C3F6B7">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="Id_Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend__Id_Accou__4AB81AF0">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="Id_AccountFriend" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profile__Id_Acco__3A81B327">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="Id_Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CastleLegacyModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountCards" EntityType="Self.AccountCards" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccountCastles" EntityType="Self.AccountCastles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Castle" EntityType="Self.Castle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friend" EntityType="Self.Friend" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AccountCa__Id_Ac__4F7CD00D" Association="Self.FK__AccountCa__Id_Ac__4F7CD00D">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="AccountCastles" EntitySet="AccountCastles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountCa__Id_Ac__5535A963" Association="Self.FK__AccountCa__Id_Ac__5535A963">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="AccountCards" EntitySet="AccountCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountCa__Id_Ca__5070F446" Association="Self.FK__AccountCa__Id_Ca__5070F446">
+            <End Role="Castle" EntitySet="Castle" />
+            <End Role="AccountCastles" EntitySet="AccountCastles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountCa__Id_Ca__5629CD9C" Association="Self.FK__AccountCa__Id_Ca__5629CD9C">
+            <End Role="Card" EntitySet="Card" />
+            <End Role="AccountCards" EntitySet="AccountCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend__Id_Accou__49C3F6B7" Association="Self.FK__Friend__Id_Accou__49C3F6B7">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Friend" EntitySet="Friend" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend__Id_Accou__4AB81AF0" Association="Self.FK__Friend__Id_Accou__4AB81AF0">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Friend" EntitySet="Friend" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profile__Id_Acco__3A81B327" Association="Self.FK__Profile__Id_Acco__3A81B327">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CastleLegacyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id_Account" />
+          </Key>
+          <Property Name="Id_Account" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="320" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AccountCastles" Relationship="Self.FK__AccountCa__Id_Ac__4F7CD00D" FromRole="Account" ToRole="AccountCastles" />
+          <NavigationProperty Name="AccountCards" Relationship="Self.FK__AccountCa__Id_Ac__5535A963" FromRole="Account" ToRole="AccountCards" />
+          <NavigationProperty Name="Friend" Relationship="Self.FK__Friend__Id_Accou__49C3F6B7" FromRole="Account" ToRole="Friend" />
+          <NavigationProperty Name="Friend1" Relationship="Self.FK__Friend__Id_Accou__4AB81AF0" FromRole="Account" ToRole="Friend" />
+          <NavigationProperty Name="Profile" Relationship="Self.FK__Profile__Id_Acco__3A81B327" FromRole="Account" ToRole="Profile" />
+        </EntityType>
+        <EntityType Name="AccountCards">
+          <Key>
+            <PropertyRef Name="Id_AccountCards" />
+          </Key>
+          <Property Name="Id_AccountCards" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Account" Type="Int32" />
+          <Property Name="Id_Card" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__AccountCa__Id_Ac__5535A963" FromRole="AccountCards" ToRole="Account" />
+          <NavigationProperty Name="Card" Relationship="Self.FK__AccountCa__Id_Ca__5629CD9C" FromRole="AccountCards" ToRole="Card" />
+        </EntityType>
+        <EntityType Name="AccountCastles">
+          <Key>
+            <PropertyRef Name="Id_AccountCastles" />
+          </Key>
+          <Property Name="Id_AccountCastles" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Account" Type="Int32" />
+          <Property Name="Id_Castle" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__AccountCa__Id_Ac__4F7CD00D" FromRole="AccountCastles" ToRole="Account" />
+          <NavigationProperty Name="Castle" Relationship="Self.FK__AccountCa__Id_Ca__5070F446" FromRole="AccountCastles" ToRole="Castle" />
+        </EntityType>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="Id_Card" />
+          </Key>
+          <Property Name="Id_Card" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Health" Type="Int32" />
+          <Property Name="Attack" Type="Int32" />
+          <NavigationProperty Name="AccountCards" Relationship="Self.FK__AccountCa__Id_Ca__5629CD9C" FromRole="Card" ToRole="AccountCards" />
+        </EntityType>
+        <EntityType Name="Castle">
+          <Key>
+            <PropertyRef Name="Id_Castle" />
+          </Key>
+          <Property Name="Id_Castle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="AccountCastles" Relationship="Self.FK__AccountCa__Id_Ca__5070F446" FromRole="Castle" ToRole="AccountCastles" />
+        </EntityType>
+        <EntityType Name="Friend">
+          <Key>
+            <PropertyRef Name="Id_Friend" />
+          </Key>
+          <Property Name="Id_Friend" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Account" Type="Int32" />
+          <Property Name="Id_AccountFriend" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Friend__Id_Accou__49C3F6B7" FromRole="Friend" ToRole="Account" />
+          <NavigationProperty Name="Account1" Relationship="Self.FK__Friend__Id_Accou__4AB81AF0" FromRole="Friend" ToRole="Account" />
+        </EntityType>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id_Profile" />
+          </Key>
+          <Property Name="Id_Profile" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProfileImage" Type="Int32" />
+          <Property Name="Victories" Type="Int32" />
+          <Property Name="Losses" Type="Int32" />
+          <Property Name="Id_Account" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Profile__Id_Acco__3A81B327" FromRole="Profile" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK__AccountCa__Id_Ac__4F7CD00D">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountCastles" Type="Self.AccountCastles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="AccountCastles">
+              <PropertyRef Name="Id_Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountCa__Id_Ac__5535A963">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountCards" Type="Self.AccountCards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="AccountCards">
+              <PropertyRef Name="Id_Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend__Id_Accou__49C3F6B7">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="Id_Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Friend__Id_Accou__4AB81AF0">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Friend" Type="Self.Friend" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="Friend">
+              <PropertyRef Name="Id_AccountFriend" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Profile__Id_Acco__3A81B327">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Profile" Type="Self.Profile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id_Account" />
+            </Principal>
+            <Dependent Role="Profile">
+              <PropertyRef Name="Id_Account" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountCa__Id_Ca__5629CD9C">
+          <End Role="Card" Type="Self.Card" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountCards" Type="Self.AccountCards" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card">
+              <PropertyRef Name="Id_Card" />
+            </Principal>
+            <Dependent Role="AccountCards">
+              <PropertyRef Name="Id_Card" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AccountCa__Id_Ca__5070F446">
+          <End Role="Castle" Type="Self.Castle" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="AccountCastles" Type="Self.AccountCastles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Castle">
+              <PropertyRef Name="Id_Castle" />
+            </Principal>
+            <Dependent Role="AccountCastles">
+              <PropertyRef Name="Id_Castle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CastleLegacyEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="AccountCards" EntityType="Self.AccountCards" />
+          <EntitySet Name="AccountCastles" EntityType="Self.AccountCastles" />
+          <EntitySet Name="Card" EntityType="Self.Card" />
+          <EntitySet Name="Castle" EntityType="Self.Castle" />
+          <EntitySet Name="Friend" EntityType="Self.Friend" />
+          <EntitySet Name="Profile" EntityType="Self.Profile" />
+          <AssociationSet Name="FK__AccountCa__Id_Ac__4F7CD00D" Association="Self.FK__AccountCa__Id_Ac__4F7CD00D">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="AccountCastles" EntitySet="AccountCastles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountCa__Id_Ac__5535A963" Association="Self.FK__AccountCa__Id_Ac__5535A963">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="AccountCards" EntitySet="AccountCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend__Id_Accou__49C3F6B7" Association="Self.FK__Friend__Id_Accou__49C3F6B7">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Friend" EntitySet="Friend" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Friend__Id_Accou__4AB81AF0" Association="Self.FK__Friend__Id_Accou__4AB81AF0">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Friend" EntitySet="Friend" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Profile__Id_Acco__3A81B327" Association="Self.FK__Profile__Id_Acco__3A81B327">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Profile" EntitySet="Profile" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountCa__Id_Ca__5629CD9C" Association="Self.FK__AccountCa__Id_Ca__5629CD9C">
+            <End Role="Card" EntitySet="Card" />
+            <End Role="AccountCards" EntitySet="AccountCards" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AccountCa__Id_Ca__5070F446" Association="Self.FK__AccountCa__Id_Ca__5070F446">
+            <End Role="Castle" EntitySet="Castle" />
+            <End Role="AccountCastles" EntitySet="AccountCastles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CastleLegacyModelStoreContainer" CdmEntityContainer="CastleLegacyEntities1">
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="CastleLegacyModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Id_Account" ColumnName="Id_Account" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountCards">
+            <EntityTypeMapping TypeName="CastleLegacyModel.AccountCards">
+              <MappingFragment StoreEntitySet="AccountCards">
+                <ScalarProperty Name="Id_AccountCards" ColumnName="Id_AccountCards" />
+                <ScalarProperty Name="Id_Account" ColumnName="Id_Account" />
+                <ScalarProperty Name="Id_Card" ColumnName="Id_Card" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccountCastles">
+            <EntityTypeMapping TypeName="CastleLegacyModel.AccountCastles">
+              <MappingFragment StoreEntitySet="AccountCastles">
+                <ScalarProperty Name="Id_AccountCastles" ColumnName="Id_AccountCastles" />
+                <ScalarProperty Name="Id_Account" ColumnName="Id_Account" />
+                <ScalarProperty Name="Id_Castle" ColumnName="Id_Castle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Card">
+            <EntityTypeMapping TypeName="CastleLegacyModel.Card">
+              <MappingFragment StoreEntitySet="Card">
+                <ScalarProperty Name="Id_Card" ColumnName="Id_Card" />
+                <ScalarProperty Name="Health" ColumnName="Health" />
+                <ScalarProperty Name="Attack" ColumnName="Attack" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Castle">
+            <EntityTypeMapping TypeName="CastleLegacyModel.Castle">
+              <MappingFragment StoreEntitySet="Castle">
+                <ScalarProperty Name="Id_Castle" ColumnName="Id_Castle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Friend">
+            <EntityTypeMapping TypeName="CastleLegacyModel.Friend">
+              <MappingFragment StoreEntitySet="Friend">
+                <ScalarProperty Name="Id_Friend" ColumnName="Id_Friend" />
+                <ScalarProperty Name="Id_Account" ColumnName="Id_Account" />
+                <ScalarProperty Name="Id_AccountFriend" ColumnName="Id_AccountFriend" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profile">
+            <EntityTypeMapping TypeName="CastleLegacyModel.Profile">
+              <MappingFragment StoreEntitySet="Profile">
+                <ScalarProperty Name="Id_Profile" ColumnName="Id_Profile" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ProfileImage" ColumnName="ProfileImage" />
+                <ScalarProperty Name="Victories" ColumnName="Victories" />
+                <ScalarProperty Name="Losses" ColumnName="Losses" />
+                <ScalarProperty Name="Id_Account" ColumnName="Id_Account" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7cf932cdf60f4e238ff3a4af8d2cac34" Name="Diagram1">
+        <EntityTypeShape EntityType="CastleLegacyModel.Account" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CastleLegacyModel.AccountCards" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CastleLegacyModel.AccountCastles" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CastleLegacyModel.Card" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CastleLegacyModel.Castle" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CastleLegacyModel.Friend" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CastleLegacyModel.Profile" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <AssociationConnector Association="CastleLegacyModel.FK__AccountCa__Id_Ac__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="CastleLegacyModel.FK__AccountCa__Id_Ac__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="CastleLegacyModel.FK__Friend__Id_Accou__49C3F6B7" ManuallyRouted="false" />
+        <AssociationConnector Association="CastleLegacyModel.FK__Friend__Id_Accou__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="CastleLegacyModel.FK__Profile__Id_Acco__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="CastleLegacyModel.FK__AccountCa__Id_Ca__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="CastleLegacyModel.FK__AccountCa__Id_Ca__5070F446" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
