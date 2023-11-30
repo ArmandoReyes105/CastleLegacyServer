@@ -3,8 +3,6 @@ using Services.DTO;
 using Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
-using System.Net;
 using System.ServiceModel;
 using System;
 
@@ -37,6 +35,32 @@ namespace Services.Implementations
             return band;
         }
 
+        public int AddFriend(Friend friend)
+        {
+            int result = 0; 
+
+            using (var db = new CastleLegacyEntities1())
+            {
+                db.Friend.Add(friend);
+                result = db.SaveChanges(); 
+                Console.WriteLine(result);
+            }
+
+            return result; 
+        }
+
+        public int DeleteFriend(int accountId, int friendId)
+        {
+            int result = 0;
+            using (var db = new CastleLegacyEntities1())
+            {
+                var friend = db.Friend.FirstOrDefault(d => d.Id_Account == accountId && d.Id_AccountFriend == friendId); 
+                db.Friend.Remove(friend);
+                result = db.SaveChanges(); 
+                Console.WriteLine(result);
+            }
+            return result; 
+        }
 
         public AccountData GetAccountByUsername(string username)
         {
@@ -104,7 +128,7 @@ namespace Services.Implementations
                     friendData.ProfileImage = (int)profile.ProfileImage;
                     friendData.Victories = (int)profile.Victories;
                     friendData.Losses = (int)profile.Losses; 
-                    friendData.Id_Account = (int)friendId.Id_Account;
+                    friendData.Id_Account = (int)profile.Id_Account;
 
                     friends.Add(friendData); 
                 }
@@ -112,6 +136,33 @@ namespace Services.Implementations
 
             return friends; 
         }
+
+        public List<ProfileData> SearchProfiles(string username)
+        {
+            List<ProfileData> users = new List<ProfileData>();
+
+            using (CastleLegacyEntities1 db = new CastleLegacyEntities1())
+            {
+                var profiles = db.Profile.Where(d => d.Username.Contains(username)).ToList();
+
+                foreach (var profile in profiles)
+                {
+                    
+                    ProfileData friendData = new ProfileData();
+                    friendData.Id_Profile = profile.Id_Profile;
+                    friendData.Username = profile.Username;
+                    friendData.ProfileImage = (int)profile.ProfileImage;
+                    friendData.Victories = (int)profile.Victories;
+                    friendData.Losses = (int)profile.Losses;
+                    friendData.Id_Account = (int)profile.Id_Account;
+
+                    users.Add(friendData);
+                }
+            }
+
+            return users;
+        }
+
     }
 
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
@@ -130,7 +181,15 @@ namespace Services.Implementations
             {
                 if(user != name)
                 {
-                    currentUsers[user].NotifyConnection(name);
+                    try
+                    {
+                        currentUsers[user].NotifyConnection(name);
+                    }
+                    catch (ObjectDisposedException ex)
+                    {
+                        Console.WriteLine($"Error al notificar a {user}: {ex.Message}");
+                    }  
+                    
                 }
             }
 
@@ -141,7 +200,14 @@ namespace Services.Implementations
             currentUsers.Remove(name);
             foreach (var user in new List<string>(currentUsers.Keys))
             {
-                currentUsers[user].NotifyDisconnection(name); 
+                try
+                {
+                    currentUsers[user].NotifyDisconnection(name);
+                }
+                catch (ObjectDisposedException ex)
+                {
+                    Console.WriteLine($"Error al notificar a {user}: {ex.Message}");
+                }
             }
         }
 
